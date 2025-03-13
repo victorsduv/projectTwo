@@ -30,48 +30,47 @@ public abstract class Base {
 
     @BeforeAll
     public static void setUp() {
-        System.out.println("Staring...");
-        // String userDataDir = "./user-data/victor/chromium";
-        // Path path = FileSystems.getDefault().getPath(userDataDir);
+        String userDataDir = "./user-data/victor/chromium";
+        Path path = FileSystems.getDefault().getPath(userDataDir);
 
-        // Playwright playwright = Playwright.create();
-        // BrowserType browserType = playwright.chromium();
+        playwright = Playwright.create();
+        BrowserType browserType = playwright.chromium();
         
-        // BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType.LaunchPersistentContextOptions().setHeadless(false));
-        // page = bc.newPage();
+        BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType.LaunchPersistentContextOptions().setHeadless(false));
+        page = bc.newPage();
 
-        // page.navigate("https://www.casetify.com/");
+        page.navigate("https://www.casetify.com/");
 
-        // try {
-        //     Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
-        //     if (accept_button.count() > 0) {
-        //         accept_button.click();
-        //     }
-        //     FrameLocator frame = page.frameLocator("//iframe[@id='cms-popup-iframe']");
-        //     Locator cms_close_btn = frame.locator("//button[@aria-label='Close']");
-        //     if (cms_close_btn.count() > 0) {
-        //         cms_close_btn.click();    
-        //     }
-        // } catch (Exception e) {
-        //     System.err.println(e);
-        // }
+        try {
+            Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
+            if (accept_button.count() > 0) {
+                accept_button.click();
+            }
+            FrameLocator frame = page.frameLocator("//iframe[@id='cms-popup-iframe']");
+            Locator cms_close_btn = frame.locator("//button[@aria-label='Close']");
+            if (cms_close_btn.count() > 0) {
+                cms_close_btn.click();    
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     @AfterAll
     public static void close() throws IOException {
         System.out.printf("After all counting: %d\n", ++counting);
-        // playwright.close();
-        // LocalDateTime currentDateTime = LocalDateTime.now();
-        // String dateTimeSString = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        // path = System.getProperty("user.dir") + "/testresult/index-" + dateTimeSString + ".html";
+        playwright.close();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        String dateTimeSString = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        path = System.getProperty("user.dir") + "/testresult/index-" + dateTimeSString + ".html";
 
-        // ExtentSparkReporter spark = new ExtentSparkReporter(path);
-        // spark.config().setTheme(Theme.STANDARD);
-        // spark.config().setDocumentTitle("Automation Testing Report");
-        // extent.attachReporter(spark);
-        // System.setProperty("java.awt.headless", "false");
-        // extent.flush();
-        // Desktop.getDesktop().browse(new File(path).toURI());
+        ExtentSparkReporter spark = new ExtentSparkReporter(path);
+        spark.config().setTheme(Theme.STANDARD);
+        spark.config().setDocumentTitle("Automation Testing Report");
+        extent.attachReporter(spark);
+        System.setProperty("java.awt.headless", "false");
+        extent.flush();
+        Desktop.getDesktop().browse(new File(path).toURI());
     }
 
     // private static boolean checkFrame(Page page) {

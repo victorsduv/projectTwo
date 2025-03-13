@@ -11,15 +11,14 @@ public class VictorTest extends Base {
 
       @Test
       void onlyTest() throws InterruptedException {
-            System.out.println("Test...");
-            // ExtentTest test = extent.createTest("This is testing");
+            ExtentTest test = extent.createTest("This is testing");
 
             
-            // Locator cartIcon = page.locator("(//a[@title='my cart'])[2]");
-            // cartIcon.click();
-            // Thread.sleep(3000);
+            Locator cartIcon = page.locator("(//a[@title='my cart'])[2]");
+            cartIcon.click();
+            Thread.sleep(3000);
             
-            // test.pass("Successful");
+            test.pass("Successful");
 
       }
 }
