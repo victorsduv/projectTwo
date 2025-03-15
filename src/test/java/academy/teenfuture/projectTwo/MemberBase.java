@@ -21,8 +21,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public abstract class Base {
-    protected static ExtentReports extent = new ExtentReports();
+public class MemberBase {
+        protected static ExtentReports extent = new ExtentReports();
     static String path;
     static Playwright playwright;
     protected static Page page;
@@ -72,12 +72,4 @@ public abstract class Base {
         extent.flush();
         Desktop.getDesktop().browse(new File(path).toURI());
     }
-
-    // private static boolean checkFrame(Page page) {
-    //     if (page.frameLocator("//iframe[@id='cms-popup-iframe']") == null) {
-    //         return false;
-    //     } else {
-    //         return true;
-    //     }
-    // }
 }
