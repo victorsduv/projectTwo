@@ -7,6 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,10 +23,10 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 public class MemberBase {
-        protected static ExtentReports extent = new ExtentReports();
+    protected static ExtentReports extent = new ExtentReports();
     static String path;
     static Playwright playwright;
-    protected static Page page;
+    public static Page page;
     static int counting = 0;
 
     @BeforeAll
@@ -36,10 +37,13 @@ public class MemberBase {
         playwright = Playwright.create();
         BrowserType browserType = playwright.chromium();
         
-        BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType.LaunchPersistentContextOptions().setHeadless(false));
+        BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType
+                .LaunchPersistentContextOptions()
+                .setHeadless(false)
+                .setArgs(List.of("--start-maximized")));
         page = bc.newPage();
 
-        page.navigate("https://www.casetify.com/");
+        page.navigate("https://www.casetify.com/zh_HK/product/i-scream-colour-sticker-pack#/16006373");
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
@@ -70,6 +74,5 @@ public class MemberBase {
         extent.attachReporter(spark);
         System.setProperty("java.awt.headless", "false");
         extent.flush();
-        Desktop.getDesktop().browse(new File(path).toURI());
     }
 }

@@ -18,8 +18,10 @@ public class MyOrderer implements ClassOrderer {
         switch (className) {
             case "OpenCartTest":
                 return 1;
-            case "CommonCheckCartPanelComponentTests":
+            case "CommonCartTests":
                 return 2;
+            case "CommonNonEmptyCartTest":
+                return 3;
             default:
                 return Integer.MAX_VALUE; // Fallback for unordered classes
         }

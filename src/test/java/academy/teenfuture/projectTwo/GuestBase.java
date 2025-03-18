@@ -7,6 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,25 +22,26 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public abstract class GuestBase {
+public class GuestBase {
     protected static ExtentReports extent = new ExtentReports();
     static String path;
     static Playwright playwright;
-    protected static Page page;
+    public static Page page;
     static int counting = 0;
+    protected static Action action = new Action();
 
     @BeforeAll
-    public static void setUp() {
-        String userDataDir = "./user-data/victor/chromium";
-        Path path = FileSystems.getDefault().getPath(userDataDir);
+    public static void setUp() throws InterruptedException {
 
         playwright = Playwright.create();
         BrowserType browserType = playwright.chromium();
         
-        BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType.LaunchPersistentContextOptions().setHeadless(false));
-        page = bc.newPage();
+        page = browserType.launch(new BrowserType
+                .LaunchOptions()
+                .setHeadless(false)
+                .setArgs(List.of("--start-maximized"))).newPage();
 
-        page.navigate("https://www.casetify.com/");
+        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482");
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
@@ -70,6 +72,5 @@ public abstract class GuestBase {
         extent.attachReporter(spark);
         System.setProperty("java.awt.headless", "false");
         extent.flush();
-        Desktop.getDesktop().browse(new File(path).toURI());
     }
 }

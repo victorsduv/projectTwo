@@ -21,13 +21,8 @@ public class OpenCartTest extends GuestBase {
 
                   Locator show_cart = page.locator("//body");
                   assertThat(show_cart).hasClass(Pattern.compile(".*show-cart-overlay.*"));
-
-                  Thread.sleep(1000);
             
                   test.pass("Successfully show the cart panel");
-            } catch (InterruptedException e) {
-                  System.err.println(e);
-                  test.fail("Fail to show the cart panel");
             } catch (Exception e) {
                   System.err.println(e);
                   test.fail("Fail to show the cart panel");
