@@ -1,10 +1,6 @@
 package academy.teenfuture.projectTwo;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,7 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
