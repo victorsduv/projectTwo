@@ -1,7 +1,7 @@
 package academy.teenfuture.projectTwo.victor;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.MemberBase;
 
-public class MemberCheclCartPanelComponent extends GuestBase {
+public class MemberCheclCartPanelComponent extends MemberBase {
     
 }

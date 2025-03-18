@@ -20,11 +20,10 @@ import academy.teenfuture.projectTwo.GuestBase;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CommonNonEmptyCartTest extends GuestBase {
+public class CommonNonEmptyCartTests extends GuestBase {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
         action.addProduct();
-        Thread.sleep(5000);
     }
 
     @BeforeEach

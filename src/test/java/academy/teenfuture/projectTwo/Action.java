@@ -12,6 +12,7 @@ public class Action {
     // add product
     public void addProduct() throws InterruptedException {
         GuestBase.page.locator("//div[@id='PDP_2025_PRODUCT_ACTION_ADD_TO_CART_BTN']").click();
+        Thread.sleep(5000);
     }
     
 

@@ -16,6 +16,8 @@ import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Page.NavigateOptions;
+import com.microsoft.playwright.options.WaitUntilState;
 
 public class GuestBase {
     protected static ExtentReports extent = new ExtentReports();
@@ -36,7 +38,10 @@ public class GuestBase {
                 .setHeadless(false)
                 .setArgs(List.of("--start-maximized"))).newPage();
 
-        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482");
+        NavigateOptions options = new Page.NavigateOptions()
+                                        .setWaitUntil(WaitUntilState.DOMCONTENTLOADED);
+
+        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482", options);
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");

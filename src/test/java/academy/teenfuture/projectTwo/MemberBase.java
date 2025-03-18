@@ -1,7 +1,5 @@
 package academy.teenfuture.projectTwo;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -31,19 +29,15 @@ public class MemberBase {
 
     @BeforeAll
     public static void setUp() {
-        String userDataDir = "./user-data/victor/chromium";
-        Path path = FileSystems.getDefault().getPath(userDataDir);
-
         playwright = Playwright.create();
         BrowserType browserType = playwright.chromium();
         
-        BrowserContext bc = browserType.launchPersistentContext(path, new BrowserType
-                .LaunchPersistentContextOptions()
+        page = browserType.launch(new BrowserType
+                .LaunchOptions()
                 .setHeadless(false)
-                .setArgs(List.of("--start-maximized")));
-        page = bc.newPage();
+                .setArgs(List.of("--start-maximized"))).newPage();
 
-        page.navigate("https://www.casetify.com/zh_HK/product/i-scream-colour-sticker-pack#/16006373");
+        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482");
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
@@ -55,6 +49,8 @@ public class MemberBase {
             if (cms_close_btn.count() > 0) {
                 cms_close_btn.click();    
             }
+
+
         } catch (Exception e) {
             System.err.println(e);
         }

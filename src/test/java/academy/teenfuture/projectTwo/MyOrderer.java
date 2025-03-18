@@ -16,12 +16,16 @@ public class MyOrderer implements ClassOrderer {
     private int getOrder(ClassDescriptor descriptor) {
         String className = descriptor.getTestClass().getSimpleName();
         switch (className) {
+            
+            case "GuestCheckCartTests":
+                return 1; 
             case "OpenCartTest":
-                return 1;
-            case "CommonCartTests":
                 return 2;
-            case "CommonNonEmptyCartTest":
+            case "CommonCartTests":
                 return 3;
+            case "CommonNonEmptyCartTests":
+                return 4;
+                // return 4;
             default:
                 return Integer.MAX_VALUE; // Fallback for unordered classes
         }
