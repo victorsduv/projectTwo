@@ -1,5 +1,6 @@
 package academy.teenfuture.projectTwo.victor;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -26,8 +27,9 @@ public class checkoutTests extends GuestBase {
     Locator checkoutInfo = page.locator("//div[@id='CHECKOUT_2024_SHIPPING']");
     Locator contactInfoSection = checkoutSection.locator("//div[@id='CHECKOUT_2024_CONTACT_INFORMATION']//div[@class='form-row']//div[@class='col-12']");
     Locator shippingAddress = checkoutSection.locator("//div[@id='CHECKOUT_2024_SHIPPING_ADRRESS']");
-    Locator shippingMethod = checkoutSection.locator("//div[@id='CHECKOUT_2024_SHIPPING_DELIVERY']");
+    Locator shippingMethod = page.locator("//div[@id='CHECKOUT_2024_SHIPPING_DELIVERY']");
     Locator paymentInfo = page.locator("//div[@id='CHECKOUT_2024_PAYMENT_INFO']");
+    Locator billingAddress = page.locator("//div[@id='CHECKOUT_2024_BILLING_ADDRESS']//div[@class='billing-address-option-container']");
 
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
@@ -88,16 +90,19 @@ public class checkoutTests extends GuestBase {
         ExtentTest test = extent.createTest("Check email input");
 
         try {            
-
             Locator emailInputField = contactInfoSection.locator("//div[@class='input-container']");
             Locator emailInput = page.locator("//div//input[@id='email']");
             Locator emailInputParent = emailInputField.locator("//div").filter(new FilterOptions().setHas(emailInput));
 
             emailInput.fill(dotenv.get("INVALID_EMAIL"));
+            contactInfoSection.click();
             assertThat(emailInputParent).hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("Email invalid input check pass");
 
+            Thread.sleep(1000);
+
             emailInput.fill(dotenv.get("EMAIL"));
+            contactInfoSection.click();
             assertThat(emailInputParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("Email valid input check pass");
         } catch (Exception e) {
@@ -123,6 +128,8 @@ public class checkoutTests extends GuestBase {
             assertThat(phoneInputParent).hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("Phone invalid input check pass");
 
+            Thread.sleep(1000);
+
             phoneInput.fill(dotenv.get("PHONE"));
             contactInfoSection.click();
             assertThat(phoneInputParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
@@ -145,11 +152,7 @@ public class checkoutTests extends GuestBase {
                                                 .locator("//div[@class='input-container']");
             Locator lastNameInput = page.locator("//div//input[@id='last_name']");
             Locator lastNameParent = lastNameField.locator("//div").filter(new FilterOptions().setHas(lastNameInput));
-            System.out.println(lastNameField.innerHTML());
 
-            // lastNameInput.focus();
-            // lastNameInput.highlight();
-            // lastNameInput.click();
             lastNameInput.type("last");
             Thread.sleep(1000);
             lastNameInput.clear();
@@ -158,9 +161,6 @@ public class checkoutTests extends GuestBase {
 
             Thread.sleep(1000);
 
-            // lastNameInput.focus();
-            // lastNameInput.highlight();
-            // lastNameInput.click();
             lastNameInput.type("last");
             assertThat(lastNameParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("Last name input check pass");
@@ -182,11 +182,7 @@ public class checkoutTests extends GuestBase {
                                                 .locator("//div[@class='input-container']");
             Locator firstNameInput = page.locator("//div//input[@id='first_name']");
             Locator firstNameParent = firstNameField.locator("//div").filter(new FilterOptions().setHas(firstNameInput));
-            System.out.println(firstNameField.innerHTML());
 
-            // firstNameInput.focus();
-            // firstNameInput.highlight();
-            // firstNameInput.click();
             firstNameInput.type("first");
             Thread.sleep(1000);
             firstNameInput.clear();
@@ -195,9 +191,6 @@ public class checkoutTests extends GuestBase {
 
             Thread.sleep(1000);
 
-            // firstNameInput.focus();
-            // firstNameInput.highlight();
-            // firstNameInput.click();
             firstNameInput.type("first");
             assertThat(firstNameParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("First name input check pass");
@@ -217,11 +210,7 @@ public class checkoutTests extends GuestBase {
             Locator addressField = shippingAddress.locator("//div[@class='form-row']").all().get(1).locator("//div[@class='input-container']");
             Locator addressInput = page.locator("//div//input[@id='address_1']");
             Locator addressParent = addressField.locator("//div").filter(new FilterOptions().setHas(addressInput));
-            System.out.println(addressField.innerHTML());
 
-            // addressInput.focus();
-            // addressInput.highlight();
-            // addressInput.click();
             addressInput.type("address");
             Thread.sleep(1000);
             addressInput.clear();
@@ -230,9 +219,6 @@ public class checkoutTests extends GuestBase {
             
             Thread.sleep(1000);
 
-            // addressInput.focus();
-            // addressInput.highlight();
-            // addressInput.click();
             addressInput.type("address");
             assertThat(addressParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("Address input check pass");
@@ -252,11 +238,7 @@ public class checkoutTests extends GuestBase {
             Locator cityField = shippingAddress.locator("//div[@class='form-row']").all().get(3).locator("//div[@class='input-container']");
             Locator cityInput = page.locator("//div//input[@id='address_city']");
             Locator cityParent = cityField.locator("//div").filter(new FilterOptions().setHas(cityInput));
-            System.out.println(cityField.innerHTML());
 
-            // cityInput.focus();
-            // cityInput.highlight();
-            // cityInput.click();
             cityInput.type("city");
             Thread.sleep(1000);
             cityInput.clear();
@@ -265,9 +247,6 @@ public class checkoutTests extends GuestBase {
             
             Thread.sleep(1000);
 
-            // cityInput.focus();
-            // cityInput.highlight();
-            // cityInput.click();
             cityInput.type("city");
             assertThat(cityParent).not().hasClass(Pattern.compile(".*is-invalid.*"));
             test.pass("City input check pass");
@@ -299,18 +278,23 @@ public class checkoutTests extends GuestBase {
         ExtentTest test = extent.createTest("Check shipping method radio");
 
         try {
-            Locator shippingMethodList = shippingMethod.locator("//div[@class='row-item']");
-            Locator lastShippingMethod = shippingMethodList.all().getLast().locator("//label");
+            shippingMethod = page.locator("//div[@id='CHECKOUT_2024_SHIPPING_DELIVERY']");
+            Locator lastShippingMethod = shippingMethod.locator("//div[@class='row-item']")
+                                                        .all().getLast().locator("//label");
+            
+            System.out.println(lastShippingMethod.innerHTML());
 
             lastShippingMethod.click();
             String[] lastIdAry = lastShippingMethod.getAttribute("for").split("-");
             String lastId = lastIdAry[lastIdAry.length - 1];
+
             assertThat(checkoutInfo).hasAttribute("currentdeliveryoptionid", lastId);
             test.pass("Shipping method radio check pass");
 
             nextStateBtn.click();
         } catch (Exception e) {
             System.err.println(e);
+            System.out.println(shippingMethod.innerHTML());
             test.fail("Shipping method radio check fail");
         }
     }
@@ -321,16 +305,78 @@ public class checkoutTests extends GuestBase {
         ExtentTest test = extent.createTest("Check payment options");
 
         try {
-            
+            Locator paymentText = paymentInfo.locator("//p").all().getFirst();
+            List<Locator> paymentOptionList = paymentInfo.locator("//div[@class='option-row']").all();
+
+            // credit card
+            Locator creditCard = paymentOptionList.getFirst().locator("//label");
+            creditCard.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*braintree.*"));
+            test.pass("Credit card option check pass");
+
+            // paypal
+            Locator paypal = paymentOptionList.get(1).locator("//label");
+            paypal.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*braintree.*"));
+            test.pass("Paypal option check pass");
+
+            // payme
+            Locator payme = paymentOptionList.get(2).locator("//label");
+            payme.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*PayMe.*"));
+            test.pass("PayMe option check pass");
+
+            // alipayHK
+            Locator alipayHK = paymentOptionList.get(3).locator("//label");
+            alipayHK.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*Oceanpayment.*"));
+            test.pass("AlipayHK option check pass");
+
+            // alipay
+            Locator alipay = paymentOptionList.get(4).locator("//label");
+            alipay.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*Oceanpayment.*"));
+            test.pass("Alipay option check pass");
+
+            // wechat
+            Locator weChat = paymentOptionList.getLast().locator("//label");
+            weChat.click();
+            assertThat(paymentText).containsText(Pattern.compile(".*Oceanpayment.*"));
+            test.pass("WeChat option check pass");
+
         } catch (Exception e) {
             System.err.println(e);
             test.fail("Payment options check fail");
         }
     }
 
-    // @Test
-    // @Order(11)
-    // void checkBillingAddress() {
+    @Test
+    @Order(11)
+    void checkBillingAddress() {
+        ExtentTest test = extent.createTest("Check billing address");
 
-    // }
+        try {
+            Locator sameAddress = billingAddress.locator("//div[@class='option-row d-flex']").all().getFirst();
+            Locator diffAddress = billingAddress.locator("//div[@class='option-row d-flex']").all().getFirst();
+            Locator sameAddressRadio = sameAddress.locator("//label");
+            Locator sameAddressInput = sameAddress.locator("//input");
+            Locator diffAddressRadio = diffAddress.locator("//label");
+            Locator diffAddressInput = diffAddress.locator("//input");
+
+            // same address
+            sameAddressRadio.click();
+            assertThat(sameAddressInput).hasAttribute("value", "true");
+            assertThat(diffAddressInput).hasAttribute("value", "false");
+
+            // diff address
+            diffAddressRadio.click();
+            assertThat(diffAddressInput).hasAttribute("value", "true");
+            assertThat(sameAddressInput).hasAttribute("value", "false");
+            test.pass("Billing address check pass");
+
+        } catch (Exception e) {
+            System.err.println(e);
+            test.fail("Billing address check fail");
+        }
+    }
 }
