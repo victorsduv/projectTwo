@@ -19,6 +19,8 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.options.WaitUntilState;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class GuestBase {
     protected static ExtentReports extent = new ExtentReports();
     static String path;
@@ -26,6 +28,7 @@ public class GuestBase {
     public static Page page;
     static int counting = 0;
     protected static Action action = new Action();
+    protected static Dotenv dotenv = Dotenv.load();
 
     @BeforeAll
     public static void setUp() throws InterruptedException {
@@ -38,10 +41,9 @@ public class GuestBase {
                 .setHeadless(false)
                 .setArgs(List.of("--start-maximized"))).newPage();
 
-        NavigateOptions options = new Page.NavigateOptions()
-                                        .setWaitUntil(WaitUntilState.DOMCONTENTLOADED);
+        NavigateOptions options = new Page.NavigateOptions();
 
-        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482", options);
+        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16007248", options);
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");

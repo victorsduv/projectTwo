@@ -23,7 +23,7 @@ import academy.teenfuture.projectTwo.GuestBase;
 public class CommonNonEmptyCartTests extends GuestBase {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
-        action.addProduct();
+        action.addProduct(page);
     }
 
     @BeforeEach
@@ -81,7 +81,7 @@ public class CommonNonEmptyCartTests extends GuestBase {
                 }
                 
                 // total amount >= 279
-                action.changeAmount(4);
+                action.changeAmount(page, 4);
                 totalAmount = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//span[@class='nowrap']");
                 totalAmount.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
                 total = totalAmount.innerText().substring(3);
@@ -101,7 +101,7 @@ public class CommonNonEmptyCartTests extends GuestBase {
             System.err.println(e);
             test.fail("Free shipping cost fail");
         } finally {
-            action.changeAmount(1);
+            action.changeAmount(page, 1);
         }
     }
 
@@ -176,7 +176,7 @@ public class CommonNonEmptyCartTests extends GuestBase {
             }
 
             // check free shipping
-            action.changeAmount(2);
+            action.changeAmount(page, 2);
             if (shipping.equals("0")) {
                 Locator tag = page.locator("//div[@class='free-shipping-tag nowrap']");
                 tag.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -187,7 +187,7 @@ public class CommonNonEmptyCartTests extends GuestBase {
             System.err.println(e);
             test.fail("Payment summary without voucher check fail");
         } finally {
-            action.changeAmount(1);
+            action.changeAmount(page, 1);
         }
     }
 
@@ -235,7 +235,7 @@ public class CommonNonEmptyCartTests extends GuestBase {
             test.pass("Invalid voucher check pass");
 
             closeModalBtn.click();
-            action.changeAmount(2);
+            action.changeAmount(page, 2);
             voucherBtn.click();
 
             // valid voucher input
@@ -303,6 +303,23 @@ public class CommonNonEmptyCartTests extends GuestBase {
         } catch (Exception e) {
             System.err.println(e);
             test.fail("Voucher function check fail");
+        }
+    }
+
+    @Test
+    @Order(7)
+    void checkRemoveProductBtn() {
+        ExtentTest test = extent.createTest("Check remove product btn");
+
+        try {
+            Locator removeBtn = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='cart-item-container']//a[@class='remove-btn']");
+            removeBtn.click();
+            Locator payBtnField = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='sticky-cta-container']");
+            payBtnField.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
+            test.pass("Remove product btn check pass");
+        } catch (Exception e) {
+            System.err.println(e);
+            test.fail("Remove product btn check fail");
         }
     }
 }

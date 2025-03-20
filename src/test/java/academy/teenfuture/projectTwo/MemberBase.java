@@ -1,8 +1,6 @@
 package academy.teenfuture.projectTwo;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,12 +11,14 @@ import org.junit.jupiter.api.BeforeAll;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Playwright;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class MemberBase {
     protected static ExtentReports extent = new ExtentReports();
@@ -26,6 +26,8 @@ public class MemberBase {
     static Playwright playwright;
     public static Page page;
     static int counting = 0;
+    protected static Action action = new Action();
+    protected static Dotenv dotenv = Dotenv.load();
 
     @BeforeAll
     public static void setUp() {
@@ -37,7 +39,9 @@ public class MemberBase {
                 .setHeadless(false)
                 .setArgs(List.of("--start-maximized"))).newPage();
 
-        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16008482");
+        NavigateOptions options = new Page.NavigateOptions();
+
+        page.navigate("https://www.casetify.com/product/camera-lens-protector#/16007248", options);
 
         try {
             Locator accept_button = page.locator("//div[@data-label='accept-all-cookies-button']");
@@ -49,8 +53,7 @@ public class MemberBase {
             if (cms_close_btn.count() > 0) {
                 cms_close_btn.click();    
             }
-
-
+            action.login(page, dotenv);
         } catch (Exception e) {
             System.err.println(e);
         }

@@ -5,6 +5,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -17,7 +18,12 @@ import academy.teenfuture.projectTwo.GuestBase;
 public class GuestCheckCartTests extends GuestBase {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
-        action.addProduct();
+        action.addProduct(page);
+    }
+    
+    @BeforeEach
+    private void waitJS() throws InterruptedException {
+        Thread.sleep(1000);
     }
 
     @Test
@@ -67,7 +73,6 @@ public class GuestCheckCartTests extends GuestBase {
             Locator signInBtn = walletContext.locator("//button").all().getLast();
             
             // sign up btn
-            System.out.println("sign up btn");
             signUpBtn.click();
             Locator loginModal = page.locator("//div[@class='login-container']");
             loginModal.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -78,7 +83,6 @@ public class GuestCheckCartTests extends GuestBase {
             modalCloseBtn.click();
 
             // sign in btn
-            System.out.println("sign in btn");
             signInBtn.click();
             loginModal.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
             assertThat(body).hasClass(Pattern.compile(".*login-modal-open.*"));
