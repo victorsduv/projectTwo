@@ -294,11 +294,8 @@ public class checkoutTests extends Base {
                 shippingMethod.highlight();
             }
             honeyShipping.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
-            // shippingMethod.highlight();
             Locator lastShippingMethod = shippingMethod.locator("//div[@class='row-item']")
-                                                        .all().getLast().locator("//label");
-            
-            System.out.println(lastShippingMethod.innerHTML());
+                                                        .last().locator("//label");
 
             lastShippingMethod.click();
             String[] lastIdAry = lastShippingMethod.getAttribute("for").split("-");
