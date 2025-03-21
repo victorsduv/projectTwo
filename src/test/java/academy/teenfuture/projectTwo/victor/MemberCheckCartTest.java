@@ -16,7 +16,6 @@ import com.microsoft.playwright.Locator;
 
 import academy.teenfuture.projectTwo.MemberBase;
 
-// @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MemberCheckCartTest extends MemberBase {
     @BeforeAll 
     private static void openCartPanel() {
@@ -39,7 +38,6 @@ public class MemberCheckCartTest extends MemberBase {
     }
 
     @Test
-    // @Order(1)
     void checkPromotionBanner() throws InterruptedException {
         ExtentTest test = extent.createTest("Check promotion banner");
 
@@ -124,17 +122,4 @@ public class MemberCheckCartTest extends MemberBase {
             action.changeAmount(page, 1);
         }
     }
-
-    // @Test
-    // @Order(2)
-    // void checkVoucherWallet() {
-    //     ExtentTest test = extent.createTest("Check voucher wallet");
-
-    //     try {
-            
-    //     } catch (Exception e) {
-    //         System.err.println(e);
-    //         test.fail("Voucher wallet check fail");
-    //     }
-    // }
 }
