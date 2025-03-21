@@ -2,6 +2,7 @@ package academy.teenfuture.projectTwo.victor;
 
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,11 @@ public class OpenCartTest extends GuestBase {
       @BeforeAll 
       private static void setting() {
             currentClass = "OpenCartTest";
+      }
+
+      @AfterEach
+      private void teardown() throws InterruptedException {
+            Thread.sleep(1000);
       }
 
       @Test

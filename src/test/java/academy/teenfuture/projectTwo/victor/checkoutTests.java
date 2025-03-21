@@ -1,8 +1,12 @@
 package academy.teenfuture.projectTwo.victor;
 
+// import java.nio.file.Paths;
+// import java.time.LocalDateTime;
+// import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -15,6 +19,8 @@ import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.FilterOptions;
 import com.microsoft.playwright.Locator.WaitForOptions;
+// import com.microsoft.playwright.Page;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
@@ -49,6 +55,11 @@ public class checkoutTests extends GuestBase {
     
     @BeforeEach
     private void waitJS() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+    
+    @AfterEach
+    private void teardown() throws InterruptedException {
         Thread.sleep(1000);
     }
 
@@ -282,14 +293,25 @@ public class checkoutTests extends GuestBase {
         ExtentTest test = extent.createTest("Check shipping method radio");
 
         try {
+            shippingMethod.scrollIntoViewIfNeeded();
             Locator honeyShipping = shippingMethod.locator("//div[@class='skeleton-container']");
-            honeyShipping.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            if (honeyShipping.isVisible()) {
+                shippingMethod.highlight();
+            }
+            // LocalDateTime currentDateTime = LocalDateTime.now();
+            // String dateTimeSString = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+            // page.screenshot(new Page.ScreenshotOptions()
+            //                     .setPath(Paths.get("screenshots/honeyShipping_" + dateTimeSString +".png"))
+            //                     .setFullPage(true));
             honeyShipping.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
+            // page.screenshot(new Page.ScreenshotOptions()
+            //                     .setPath(Paths.get("screenshots/afterHoneyShipping_" + dateTimeSString +".png"))
+            //                     .setFullPage(true));
             // shippingMethod.highlight();
             Locator lastShippingMethod = shippingMethod.locator("//div[@class='row-item']")
                                                         .all().getLast().locator("//label");
             
-            System.out.println(lastShippingMethod.innerHTML());
+            // System.out.println(lastShippingMethod.innerHTML());
 
             lastShippingMethod.click();
             String[] lastIdAry = lastShippingMethod.getAttribute("for").split("-");
@@ -312,8 +334,11 @@ public class checkoutTests extends GuestBase {
         ExtentTest test = extent.createTest("Check payment options");
 
         try {
+            paymentInfo.scrollIntoViewIfNeeded();
             Locator honeyPayment = paymentInfo.locator("//div[@class='skeleton-container']");
-            honeyPayment.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            if (honeyPayment.isVisible()) {
+                honeyPayment.highlight();
+            }
             honeyPayment.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
             Locator paymentText = paymentInfo.locator("//p").all().getFirst();
             List<Locator> paymentOptionList = paymentInfo.locator("//div[@class='option-row']").all();

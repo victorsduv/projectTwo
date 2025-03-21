@@ -2,7 +2,10 @@ package academy.teenfuture.projectTwo;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -30,6 +33,9 @@ public class MemberBase {
     protected static String currentClass = "";
     protected static Action action = new Action();
     protected static Dotenv dotenv = Dotenv.load();
+    static String pathProject = System.getProperty("user.dir");
+    static String dateTimeSString;
+    static String videoName;
 
     @BeforeAll
     public static void setUp() {
@@ -39,11 +45,19 @@ public class MemberBase {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int width = dimension.width;
         int height = dimension.height;
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        dateTimeSString = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        videoName = "video_" + dateTimeSString + "_";
         
         page = browserType.launch(new BrowserType
                 .LaunchOptions()
                 .setHeadless(false))
-                .newContext(new Browser.NewContextOptions().setViewportSize(width, height)).newPage();
+                .newContext(new Browser.NewContextOptions()
+                                        .setViewportSize(width, height)
+                                        .setRecordVideoDir(Paths.get("video/"))
+                                        .setRecordVideoSize(width, height))
+                                        .newPage();
 
         NavigateOptions options = new Page.NavigateOptions();
 
@@ -67,6 +81,8 @@ public class MemberBase {
 
     @AfterAll
     public static void close() throws IOException {
+        Path tempVideoName = page.video().path().getFileName();
+
         playwright.close();
         LocalDateTime currentDateTime = LocalDateTime.now();
         String dateTimeSString = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
@@ -78,5 +94,10 @@ public class MemberBase {
         extent.attachReporter(spark);
         System.setProperty("java.awt.headless", "false");
         extent.flush();
+        
+        videoName += currentClass; 
+        File file1 = new File(pathProject + File.separator + "video" + File.separator + tempVideoName);
+        File file2 = new File(pathProject + File.separator + "video" + File.separator + videoName + ".webm");
+        file1.renameTo(file2);
     }
 }
