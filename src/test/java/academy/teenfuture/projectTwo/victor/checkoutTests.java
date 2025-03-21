@@ -3,6 +3,7 @@ package academy.teenfuture.projectTwo.victor;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -49,6 +50,11 @@ public class checkoutTests extends Base {
     
     @BeforeEach
     private void waitJS() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+
+    @AfterEach
+    private void waiting() throws InterruptedException {
         Thread.sleep(1000);
     }
 
