@@ -2,8 +2,6 @@ package academy.teenfuture.projectTwo.victor;
 
 import java.util.regex.Pattern;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -14,6 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.WaitForOptions;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import academy.teenfuture.projectTwo.GuestBase;
@@ -23,6 +22,7 @@ import academy.teenfuture.projectTwo.GuestBase;
 public class CommonNonEmptyCartTests extends GuestBase {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
+        currentClass = "CommonNonEmptyCartTests";
         action.addProduct(page);
     }
 

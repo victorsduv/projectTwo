@@ -1,10 +1,10 @@
 package academy.teenfuture.projectTwo;
 
+import java.util.Comparator;
+
 import org.junit.jupiter.api.ClassDescriptor;
 import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.ClassOrdererContext;
-
-import java.util.Comparator;
 
 public class MyOrderer implements ClassOrderer {
     // This class remains empty, it is used only as a holder for the above annotations
@@ -17,7 +17,7 @@ public class MyOrderer implements ClassOrderer {
         String className = descriptor.getTestClass().getSimpleName();
         switch (className) {
             case "OpenCartTest":
-                return 6; 
+                return 1; 
             case "CommonCartTests":
                 return 2;
             case "CommonNonEmptyCartTests":
@@ -27,7 +27,7 @@ public class MyOrderer implements ClassOrderer {
             case "MemberCheckCartTest":
                 return 5;
             case "checkoutTests":
-                return 1;
+                return 6;
             default:
                 return Integer.MAX_VALUE; // Fallback for unordered classes
         }

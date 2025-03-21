@@ -2,6 +2,7 @@ package academy.teenfuture.projectTwo.victor;
 
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -11,6 +12,10 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import academy.teenfuture.projectTwo.GuestBase;
 
 public class OpenCartTest extends GuestBase {
+      @BeforeAll 
+      private static void setting() {
+            currentClass = "OpenCartTest";
+      }
 
       @Test
       void openCartTest() {

@@ -7,12 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Locator;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
-import org.junit.jupiter.api.TestMethodOrder;
 
 import academy.teenfuture.projectTwo.GuestBase;
 
@@ -20,6 +19,7 @@ import academy.teenfuture.projectTwo.GuestBase;
 public class CommonCartTests extends GuestBase {
     @BeforeAll 
     private static void openCartPanel() {
+        currentClass = "CommonCartTests";
         Locator cartIcon = page.locator("(//a[@title='my cart'])[2]");
         cartIcon.click();
     }

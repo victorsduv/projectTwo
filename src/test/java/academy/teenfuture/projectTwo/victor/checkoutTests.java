@@ -33,6 +33,8 @@ public class checkoutTests extends GuestBase {
 
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
+        currentClass = "checkoutTests";
+        
         action.addProduct(page);
         // System.out.println("Finish adding product");
         Locator payBtnField = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='sticky-cta-container']");

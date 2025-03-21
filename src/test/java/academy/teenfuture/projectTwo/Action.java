@@ -44,13 +44,14 @@ public class Action {
     public void changeAmount(Page page, int amount) throws InterruptedException {
         Locator input = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//input[@class='quantity-control']");
         input.fill(amount+"");
-        page.locator("(//span[@class='price-text'])[2]").click();
+        page.locator("//span[@class='price-text']").last().click();
         Thread.sleep(10000);
     }
 
     // remove product
     public void removeProduct(Page page) {
-        page.getByText("移除").nth(1).click();
+        page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='cart-item-container']//a[@class='remove-btn']").click();
+        System.out.println("Product is removed");
     }
 
     // add coupon

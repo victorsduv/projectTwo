@@ -2,23 +2,22 @@ package academy.teenfuture.projectTwo.victor;
 
 import java.util.regex.Pattern;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.MethodOrderer;
-// import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-// import org.junit.jupiter.api.TestMethodOrder;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Locator.WaitForOptions;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import academy.teenfuture.projectTwo.MemberBase;
 
 public class MemberCheckCartTest extends MemberBase {
     @BeforeAll 
     private static void openCartPanel() {
+        currentClass = "MemberCheckCartTest";
         Locator cartIcon = page.locator("(//a[@title='my cart'])[2]");
         cartIcon.click();
     }
@@ -45,6 +44,16 @@ public class MemberCheckCartTest extends MemberBase {
             // empty cart
             Locator promotionBanner = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='club-promotion-banner']");
             Locator progressChart = promotionBanner.locator("//div[@class='tier-bar']");
+            // if cart is not empty, clear the cart
+            Locator cartContainer = page.locator("//nav[@class='nav-d-flex align-items-center justify-content-space-between position-relative header']//div[@class='cart-item-container']");
+            if (cartContainer.isVisible()) {
+                cartContainer.highlight();
+                action.removeProduct(page);
+                cartContainer.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
+                // System.out.println(cartContainer.isVisible());
+                Thread.sleep(20000);
+            }
+            cartContainer.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
             assertThat(progressChart).hasCSS("--totalWidth", "0%");
             Locator promotionTitle = promotionBanner.locator("//p[@class='club-promotion-title']");
             assertThat(promotionTitle).containsText(Pattern.compile(".*CASETiFY Club.*"));
@@ -65,7 +74,7 @@ public class MemberCheckCartTest extends MemberBase {
             promotionTitle = promotionBanner.locator("//p[@class='club-promotion-title']");
             // assertThat(promotionTitle).containsText(Pattern.compile(regex));
             long barWidth = barWidthPercent(pointsInt);
-            System.out.println(points.all().getFirst().innerText());
+            // System.out.println(points.all().getFirst().innerText());
             progressChart = promotionBanner.locator("//div[@class='tier-bar']");
             assertThat(progressChart).hasCSS("--totalWidth", barWidth+"%");
             test.pass("Promotion banner from basic to bronze check pass");
@@ -119,7 +128,7 @@ public class MemberCheckCartTest extends MemberBase {
             System.err.println(e);
             test.fail("Promotion banner check fail");
         } finally {
-            action.changeAmount(page, 1);
+            action.removeProduct(page);
         }
     }
 }
