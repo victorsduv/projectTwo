@@ -288,8 +288,11 @@ public class checkoutTests extends Base {
         ExtentTest test = extent.createTest("Check shipping method radio");
 
         try {
+            shippingMethod.scrollIntoViewIfNeeded();
             Locator honeyShipping = shippingMethod.locator("//div[@class='skeleton-container']");
-            honeyShipping.waitFor(new WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            if (honeyShipping.isVisible()) {
+                shippingMethod.highlight();
+            }
             honeyShipping.waitFor(new WaitForOptions().setState(WaitForSelectorState.DETACHED));
             // shippingMethod.highlight();
             Locator lastShippingMethod = shippingMethod.locator("//div[@class='row-item']")
