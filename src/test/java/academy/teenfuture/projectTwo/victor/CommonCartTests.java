@@ -13,10 +13,10 @@ import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Locator;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.Base;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CommonCartTests extends GuestBase {
+public class CommonCartTests extends Base {
     @BeforeAll 
     private static void openCartPanel() {
         currentClass = "CommonCartTests";

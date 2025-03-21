@@ -12,9 +12,9 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.Base;
 
-public class GuestCheckCartTests extends GuestBase {
+public class GuestCheckCartTests extends Base {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
         currentClass = "GuestCheckCartTests";

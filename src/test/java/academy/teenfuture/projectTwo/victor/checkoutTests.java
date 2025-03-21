@@ -18,10 +18,10 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.Base;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class checkoutTests extends GuestBase {
+public class checkoutTests extends Base {
     Locator checkoutSection = page.locator("//div[@class='checkout-section-info']");
     Locator nextStateBtn = page.locator("//button[@class='dark-btn next-state-btn']");
     Locator checkoutInfo = page.locator("//div[@id='CHECKOUT_2024_SHIPPING']");

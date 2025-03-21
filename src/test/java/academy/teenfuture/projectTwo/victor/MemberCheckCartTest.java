@@ -12,12 +12,13 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import academy.teenfuture.projectTwo.MemberBase;
+import academy.teenfuture.projectTwo.Base;
 
-public class MemberCheckCartTest extends MemberBase {
+public class MemberCheckCartTest extends Base {
     @BeforeAll 
     private static void openCartPanel() {
         currentClass = "MemberCheckCartTest";
+        action.login(page, dotenv);
         Locator cartIcon = page.locator("(//a[@title='my cart'])[2]");
         cartIcon.click();
     }

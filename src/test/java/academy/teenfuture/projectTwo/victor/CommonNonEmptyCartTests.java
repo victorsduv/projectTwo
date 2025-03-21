@@ -15,11 +15,11 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.Base;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CommonNonEmptyCartTests extends GuestBase {
+public class CommonNonEmptyCartTests extends Base {
     @BeforeAll 
     private static void openCartPanel() throws InterruptedException {
         currentClass = "CommonNonEmptyCartTests";

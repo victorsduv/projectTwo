@@ -22,7 +22,7 @@ import com.microsoft.playwright.Playwright;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class MemberBase {
+public class Base {
     protected static ExtentReports extent;
     static String path;
     static Playwright playwright;
@@ -32,7 +32,7 @@ public class MemberBase {
     protected static Dotenv dotenv = Dotenv.load();
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws InterruptedException {
         extent = new ExtentReports();
         playwright = Playwright.create();
         BrowserType browserType = playwright.chromium();
@@ -59,7 +59,6 @@ public class MemberBase {
             if (cms_close_btn.count() > 0) {
                 cms_close_btn.click();    
             }
-            action.login(page, dotenv);
         } catch (Exception e) {
             System.err.println(e);
         }

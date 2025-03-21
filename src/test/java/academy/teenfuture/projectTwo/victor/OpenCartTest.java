@@ -9,9 +9,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Locator;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-import academy.teenfuture.projectTwo.GuestBase;
+import academy.teenfuture.projectTwo.Base;
 
-public class OpenCartTest extends GuestBase {
+public class OpenCartTest extends Base {
       @BeforeAll 
       private static void setting() {
             currentClass = "OpenCartTest";

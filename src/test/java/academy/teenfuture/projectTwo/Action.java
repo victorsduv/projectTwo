@@ -54,22 +54,7 @@ public class Action {
         System.out.println("Product is removed");
     }
 
-    // add coupon
-
-    // remove coupon
-
-    // status checking
-
-    // check cart empty
-    public boolean isEmptyCart() {
-        return false;
-    }
-
-    // check login status
-    public boolean isLogin() {
-        return false;
-    }
-
+    
     boolean checkLuhn(String cardNo) {
         int nDigits = cardNo.length();
 
